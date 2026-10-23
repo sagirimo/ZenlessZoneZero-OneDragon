@@ -6,6 +6,7 @@ from one_dragon.base.operation.operation_base import OperationResult
 from one_dragon.base.operation.operation_edge import node_from
 from one_dragon.base.operation.operation_node import operation_node
 from one_dragon.base.operation.operation_round_result import OperationRoundResult
+from one_dragon.utils.log_utils import log
 from zzz_od.application.battle_assistant.auto_battle import auto_battle_const
 from zzz_od.application.battle_assistant.battle_assistant_input_mode import (
     apply_battle_assistant_input_mode,
@@ -62,9 +63,10 @@ class AutoBattleApp(ZApplication):
                 op_name=self.ctx.battle_assistant_config.auto_battle_config,
             )
             self.ctx.auto_battle_context.auto_ultimate_enabled = self.ctx.battle_assistant_config.auto_ultimate_enabled
-        except Exception:
+        except Exception as exc:
             # 捕获异常，显式返回 Fail，防止框架自动重试
-            return self.round_fail(status='加载指令失败')
+            log.exception('加载自动战斗指令失败')
+            return self.round_fail(status=f'加载指令失败: {exc}')
 
         self.ctx.dispatch_event(
             AutoBattleApp.EVENT_OP_LOADED,

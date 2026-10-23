@@ -1,3 +1,46 @@
+# ZZZ Battle · 绝区零轻量战斗助手
+
+**手动进入关卡，一键开始战斗。** 基于 [绝区零一条龙](https://github.com/OneDragon-Anything/ZenlessZoneZero-OneDragon) 的个人 fork，提供一个专门用于自动战斗的独立窗口。
+
+界面参考 [BetterGI](https://github.com/babalae/better-genshin-impact) 的 Fluent 风格，只保留「自动战斗」「设置」「日志」三个页面。使用原项目的战斗策略与识别能力，不需要从完整版一条龙菜单进入。
+
+![独立战斗窗口](image/battle-assistant.png)
+
+## 使用
+
+1. 下载本 fork 的 **`codex/battle-assistant` 分支**源码，解压到固定目录；也可以克隆本分支。
+2. 首次双击根目录 **`安装战斗助手.cmd`**，联网准备本地运行环境，无需预装 Python。
+3. 日常双击 **`启动战斗助手.cmd`**。打开游戏，设为 1920×1080，手动进入关卡。
+4. 选择战斗策略，按 **F9** 开始 / 暂停 / 继续，**F10** 停止。热键以窗口实际显示为准。
+
+```powershell
+git clone --branch codex/battle-assistant https://github.com/sagirimo/ZenlessZoneZero-OneDragon.git
+```
+
+Windows x64。游戏保持前台，游戏键位与设置页一致；切换窗口、操作菜单和处理结算前请暂停。若游戏以管理员身份运行，助手也需使用相同权限。启动文件依赖整个项目目录，不能单独移走。
+
+## 这个版本改了什么
+
+- **独立启动**：只初始化战斗所需服务，绕过完整启动器、OCR 初始化与非战斗应用。
+- **更少界面工作**：运行状态变化时才刷新；日志最多保留 200 条，隐藏日志页时停止刷新。
+- **明确的启停和错误提示**：后台准备资源，重复开始不创建第二个任务；停止与关闭等待任务结束并释放按键。
+- **独立配置**：继承已有策略和键位，后续改动保存在专用 YAML 文件中。
+
+依赖安装仍沿用上游锁文件，首次安装需要网络。战斗模型沿用原项目，缺失时需要联网获取。本版本没有重写角色策略，也没有改动闪避与连携判定；目前尚未完成真实游戏中的帧率、闪避率和连携时序验证。
+
+## 验证与源码
+
+21 项针对性测试通过，覆盖配置隔离、初始化失败、取消与关闭、状态更新、日志缓存等；本机原生 Qt 窗口初始化和关闭检查通过。源码与测试分别保存在主仓及 [配套测试 fork](https://github.com/sagirimo/zzz-od-test/tree/codex/battle-assistant)。
+
+[设计、配置与测试说明](../docs/develop/zzz/battle_standalone.md) · [GPL-3.0 许可证](../LICENSE)
+
+## 致谢
+
+战斗引擎、策略、资源与基础框架来自 OneDragon-Anything 及原项目贡献者，本 fork 保留原版权与 GPL-3.0 许可证。BetterGI 仅作为界面布局参考，没有使用其标志、插画或代码。此分支为个人定制版。
+
+<details>
+<summary>查看原版一条龙项目介绍</summary>
+
 <!-- markdownlint-restore -->
 <div align="center">
 
@@ -132,3 +175,5 @@ See the [Privacy Policy](PRIVACY.md).
 💖 查看[致谢名单](https://onedragon-anything.github.io/other/zh/like/thanks_2024.html)
 
 </div>
+
+</details>
